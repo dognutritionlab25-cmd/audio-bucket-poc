@@ -50,9 +50,9 @@ def test_unauthenticated_returns_401_without_presigning(client, calls):
 
 def test_credentials_are_not_embedded_in_page(client, monkeypatch):
     secret_values = {
-        "ACCESS_KEY_ID": "test-access-key-id",
-        "SECRET_ACCESS_KEY": "test-secret-access-key",
-        "BUCKET": "private-bucket-name",
+        "AWS_ACCESS_KEY_ID": "test-access-key-id",
+        "AWS_SECRET_ACCESS_KEY": "test-secret-access-key",
+        "S3_BUCKET": "private-bucket-name",
     }
     for name, value in secret_values.items():
         monkeypatch.setenv(name, value)
@@ -61,9 +61,9 @@ def test_credentials_are_not_embedded_in_page(client, monkeypatch):
     body = response.get_data(as_text=True)
 
     assert response.status_code == 200
-    assert secret_values["ACCESS_KEY_ID"] not in body
-    assert secret_values["SECRET_ACCESS_KEY"] not in body
-    assert secret_values["BUCKET"] not in body
+    assert secret_values["AWS_ACCESS_KEY_ID"] not in body
+    assert secret_values["AWS_SECRET_ACCESS_KEY"] not in body
+    assert secret_values["S3_BUCKET"] not in body
 
 
 def test_audio_is_not_proxied_by_flask(client):
@@ -86,11 +86,11 @@ def test_health_does_not_require_bucket_credentials(client):
 
 def test_boto3_presign_uses_railway_environment_without_network(monkeypatch):
     values = {
-        "BUCKET": "audio-test-bucket",
-        "ACCESS_KEY_ID": "example-access-key",
-        "SECRET_ACCESS_KEY": "example-secret-key",
-        "REGION": "auto",
-        "ENDPOINT": "https://storage.example.test",
+        "S3_BUCKET": "audio-test-bucket",
+        "AWS_ACCESS_KEY_ID": "example-access-key",
+        "AWS_SECRET_ACCESS_KEY": "example-secret-key",
+        "AWS_DEFAULT_REGION": "auto",
+        "AWS_ENDPOINT_URL": "https://storage.example.test",
         "TEST_AUDIO_KEY": "folder/test audio.wav",
         "PRESIGNED_URL_TTL_SECONDS": "60",
     }
@@ -108,4 +108,4 @@ def test_boto3_presign_uses_railway_environment_without_network(monkeypatch):
     assert parsed.netloc == "audio-test-bucket.storage.example.test"
     assert parsed.path == "/folder/test%20audio.wav"
     assert "X-Amz-Signature" in query
-    assert values["SECRET_ACCESS_KEY"] not in url
+    assert values["AWS_SECRET_ACCESS_KEY"] not in url
