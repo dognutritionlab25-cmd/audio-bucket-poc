@@ -26,16 +26,16 @@ Bucket의 **Credentials → Add to Service → supportive-clarity**로 아래 �
 
 | 변수 | 필수 | 의미 |
 | --- | --- | --- |
-| `BUCKET` | 예 | S3 API에 사용하는 실제 Bucket 이름 |
-| `ACCESS_KEY_ID` | 예 | Railway Bucket access key ID |
-| `SECRET_ACCESS_KEY` | 예 | Railway Bucket secret key |
-| `REGION` | 예 | Bucket S3 region |
-| `ENDPOINT` | 예 | Railway S3-compatible endpoint |
+| `S3_BUCKET` | 예 | S3 API에 사용하는 실제 Bucket 이름 |
+| `AWS_ACCESS_KEY_ID` | 예 | Railway Bucket access key ID |
+| `AWS_SECRET_ACCESS_KEY` | 예 | Railway Bucket secret key |
+| `AWS_DEFAULT_REGION` | 예 | Bucket S3 region |
+| `AWS_ENDPOINT_URL` | 예 | Railway S3-compatible endpoint |
 | `TEST_AUDIO_KEY` | 예 | Bucket에 업로드한 오디오의 정확한 object key |
 | `PRESIGNED_URL_TTL_SECONDS` | 아니요 | URL 유효시간. 기본값 `120` |
 | `TEST_AUDIO_RESPONSE_CONTENT_TYPE` | 아니요 | 업로드 metadata가 잘못된 경우에만 `audio/mpeg`, `audio/wav` 등으로 덮어쓰기 |
 
-`RAILWAY_BUCKET_NAME`이 아니라 `BUCKET`을 사용합니다. `ACCESS_KEY_ID`와 `SECRET_ACCESS_KEY`는 GitHub, HTML 또는 JavaScript에 입력하지 마세요.
+Railway의 **Flask Style**이 생성한 위 변수명을 그대로 사용합니다. `AWS_ACCESS_KEY_ID`와 `AWS_SECRET_ACCESS_KEY`는 GitHub, HTML 또는 JavaScript에 입력하지 마세요.
 
 기본 동작은 object에 저장된 `Content-Type` metadata를 그대로 사용합니다. 브라우저가 형식을 인식하지 못할 때만 `TEST_AUDIO_RESPONSE_CONTENT_TYPE`을 설정하세요. 값은 `audio/*`만 허용됩니다.
 
@@ -47,7 +47,7 @@ Bucket의 **Credentials → Add to Service → supportive-clarity**로 아래 �
 4. `supportive-clarity` Service에서 **Connect Repo**를 눌러 `audio-bucket-poc`을 연결합니다.
 5. `audioletter-test` Bucket을 엽니다.
 6. **Credentials → Add to Service → supportive-clarity**를 선택합니다.
-7. `supportive-clarity` Variables에서 `BUCKET`, `ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `REGION`, `ENDPOINT`가 연결되었는지 확인합니다. 값 자체를 복사해 GitHub에 넣지 않습니다.
+7. `supportive-clarity` Variables에서 `S3_BUCKET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, `AWS_ENDPOINT_URL`이 연결되었는지 확인합니다. 값 자체를 복사해 GitHub에 넣지 않습니다.
 8. `TEST_AUDIO_KEY`에 업로드한 파일의 정확한 object key를 입력합니다. 폴더가 있다면 `folder/file.wav`처럼 전체 key를 사용합니다.
 9. `PRESIGNED_URL_TTL_SECONDS=120`을 설정합니다.
 10. 필요하면 `TEST_AUDIO_RESPONSE_CONTENT_TYPE`을 `audio/mpeg` 또는 `audio/wav`로 설정합니다. 먼저 설정하지 않고 object metadata 그대로 테스트하는 것을 권장합니다.

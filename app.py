@@ -72,11 +72,11 @@ INDEX_HTML = """<!doctype html>
 
 
 REQUIRED_BUCKET_ENV = (
-    "BUCKET",
-    "ACCESS_KEY_ID",
-    "SECRET_ACCESS_KEY",
-    "REGION",
-    "ENDPOINT",
+    "S3_BUCKET",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_DEFAULT_REGION",
+    "AWS_ENDPOINT_URL",
     "TEST_AUDIO_KEY",
 )
 
@@ -106,11 +106,11 @@ def _settings() -> dict:
         raise RuntimeError("TEST_AUDIO_RESPONSE_CONTENT_TYPE must be a valid audio/* media type")
 
     return {
-        "bucket": os.environ["BUCKET"].strip(),
-        "access_key_id": os.environ["ACCESS_KEY_ID"].strip(),
-        "secret_access_key": os.environ["SECRET_ACCESS_KEY"].strip(),
-        "region": os.environ["REGION"].strip(),
-        "endpoint": os.environ["ENDPOINT"].strip().rstrip("/"),
+        "bucket": os.environ["S3_BUCKET"].strip(),
+        "access_key_id": os.environ["AWS_ACCESS_KEY_ID"].strip(),
+        "secret_access_key": os.environ["AWS_SECRET_ACCESS_KEY"].strip(),
+        "region": os.environ["AWS_DEFAULT_REGION"].strip(),
+        "endpoint": os.environ["AWS_ENDPOINT_URL"].strip().rstrip("/"),
         "object_key": os.environ["TEST_AUDIO_KEY"].strip(),
         "ttl": _positive_ttl(),
         "response_content_type": response_content_type,
